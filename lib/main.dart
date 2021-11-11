@@ -24,14 +24,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<TodoItem> todos = [
-    // 'go to the super marker',
-    // 'finish side project',
-    // 'do the laundry',
-    // 'clean dishes',
-    // 'cook lunch',
-    TodoItem(todo: 'go to the super marker', done: false)
-  ];
+  List<TodoItem> todos = [];
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('Todo list'),
+        title: Center(child: Text('Todo list, PP')),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -55,18 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
                         todos[index].done = !todos[index].done;
                       });
                     },
-                    title: Text(
-                      todos[index].todo,
-                      style: TextStyle(
-                          decoration: todos[index].done
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none),
+                    title: Center(
+                      child: Text(
+                        todos[index].todo,
+                        style: TextStyle(
+                            decoration: todos[index].done
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            color:
+                                todos[index].done ? Colors.grey : Colors.black),
+                      ),
                     ),
                   ),
                 ),
               );
             }),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            todos.add(TodoItem(
+                done: false, todo: 'This is my TODO list item number $count'));
+            count++;
+          });
+        },
+        child: Text('Add'),
+        backgroundColor: count > 5 ? Colors.green : Colors.red,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
